@@ -20,7 +20,7 @@ int main(void)
 		if (isatty(STDIN_FILENO))
 		{
 			printf("$ ");
-			fflush(stdin);
+			fflush(stdout);
 		}
 		bytes_read = getline(&buffer, &len, stdin);
 		if (bytes_read == -1)

@@ -7,7 +7,9 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 char **get_argument(char *buffer);
+char *get_path(char *buffer);
 
 #endif

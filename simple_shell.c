@@ -39,7 +39,7 @@ int main(void)
 			perror("fork"), exit(EXIT_FAILURE);
 		else if (pid == 0)
 		{
-			execve(command_path, args, environ);
+			execve(command_path, args, NULL);
 			perror("./shell"), exit(EXIT_FAILURE);
 			free(args[0]);
 		}

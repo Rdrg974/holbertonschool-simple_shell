@@ -23,5 +23,6 @@ char **get_argument(char *buffer)
 		i++;
 	}
 	args[i] = NULL;
+	free(tmp);
 	return (args);
 }

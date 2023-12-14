@@ -10,7 +10,7 @@ int main(void)
 {
 	int status;
 	pid_t pid;
-	char *buffer = NULL;
+	char *buffer = NULL, *command_path;
 	char **args = malloc(sizeof(char *) * 10);
 	size_t len = 0;
 	ssize_t bytes_read;
@@ -36,7 +36,9 @@ int main(void)
 		else if (pid == 0)
 		{
 			args = get_argument(buffer);
-			if (execve(args[0], args, NULL) == -1)
+			command_path = get_path(args[0]);
+			printf("%s", command_path);
+			if (execve(command_path, args, NULL) == -1)
 				perror("./shell"), exit(EXIT_FAILURE);
 			free(args[0]);
 		}

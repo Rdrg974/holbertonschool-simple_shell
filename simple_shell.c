@@ -17,17 +17,16 @@ int main(void)
 
 	while (1)
 	{
-		printf("$ ");
+		if (isatty(STDIN_FILENO))
+			printf("$ ");
 		bytes_read = getline(&buffer, &len, stdin);
-		buffer[bytes_read - 1] = '\0';
 		if (bytes_read == -1)
 		{
 			if (feof(stdin))
-				printf("exit\n");
-			else
-				perror("./shell");
-			break;
+				break;
+			perror("./shell");
 		}
+		buffer[bytes_read - 1] = '\0';
 		pid = fork();
 		if (pid == -1)
 			perror("fork"), exit(EXIT_FAILURE);
@@ -36,6 +35,7 @@ int main(void)
 			args = get_argument(buffer);
 			if (execve(args[0], args, NULL) == -1)
 				perror("./shell"), exit(EXIT_FAILURE);
+			free(args[0]);
 		}
 		else
 			wait(&status);

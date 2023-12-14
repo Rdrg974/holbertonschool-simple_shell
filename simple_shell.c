@@ -27,18 +27,13 @@ int main(void)
 			perror("./shell");
 		}
 		buffer[bytes_read - 1] = '\0';
-		args = get_argument(buffer);
-		command_path = get_path(args[0]);
-		if (command_path == NULL)
-		{
-			printf("%s: command not found\n", args[0]);
-			continue;
-		}
 		pid = fork();
 		if (pid == -1)
 			perror("fork"), exit(EXIT_FAILURE);
 		else if (pid == 0)
 		{
+			args = get_argument(buffer);
+			command_path = get_path(args[0]);
 			execve(command_path, args, NULL);
 			perror("./shell"), exit(EXIT_FAILURE);
 			free(args[0]);

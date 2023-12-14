@@ -15,30 +15,32 @@ int main(void)
 	size_t len = 0;
 	ssize_t bytes_read;
 
-	while (1)
+	if (isatty(STDIN_FILENO))
 	{
-		if (isatty(STDIN_FILENO))
+		while (1)
+		{
 			printf("$ ");
-		bytes_read = getline(&buffer, &len, stdin);
-		if (bytes_read == -1)
-		{
-			if (feof(stdin))
-				break;
-			perror("./shell");
+			bytes_read = getline(&buffer, &len, stdin);
+			if (bytes_read == -1)
+			{
+				if (feof(stdin))
+					break;
+				perror("./shell");
+			}
+			buffer[bytes_read - 1] = '\0';
+			pid = fork();
+			if (pid == -1)
+				perror("fork"), exit(EXIT_FAILURE);
+			else if (pid == 0)
+			{
+				args = get_argument(buffer);
+				if (execve(args[0], args, environ) == -1)
+					perror("./shell"), exit(EXIT_FAILURE);
+				free(args[0]);
+			}
+			else
+				wait(&status);
 		}
-		buffer[bytes_read - 1] = '\0';
-		pid = fork();
-		if (pid == -1)
-			perror("fork"), exit(EXIT_FAILURE);
-		else if (pid == 0)
-		{
-			args = get_argument(buffer);
-			if (execve(args[0], args, NULL) == -1)
-				perror("./shell"), exit(EXIT_FAILURE);
-			free(args[0]);
-		}
-		else
-			wait(&status);
 	}
 	free(buffer);
 	free(args);

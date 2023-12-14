@@ -18,10 +18,7 @@ int main(void)
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-		{
-			printf("$ ");
-			fflush(stdout);
-		}
+			printf("$ "), fflush(stdout);
 		bytes_read = getline(&buffer, &len, stdin);
 		if (bytes_read == -1)
 		{
@@ -30,22 +27,25 @@ int main(void)
 			perror("./shell");
 		}
 		buffer[bytes_read - 1] = '\0';
+		args = get_argument(buffer);
+		command_path = get_path(args[0]);
+		if (command_path == NULL)
+		{
+			printf("%s: command not found\n", args[0]);
+			continue;
+		}
 		pid = fork();
 		if (pid == -1)
 			perror("fork"), exit(EXIT_FAILURE);
 		else if (pid == 0)
 		{
-			args = get_argument(buffer);
-			command_path = get_path(args[0]);
-			printf("%s", command_path);
-			if (execve(command_path, args, NULL) == -1)
-				perror("./shell"), exit(EXIT_FAILURE);
+			execve(command_path, args, environ);
+			perror("./shell"), exit(EXIT_FAILURE);
 			free(args[0]);
 		}
 		else
 			wait(&status);
 	}
-	free(buffer);
-	free(args);
+	free(buffer), free(args);
 	return (0);
 }

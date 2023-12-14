@@ -8,6 +8,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-void get_argument(char *buffer, char *tok1, char *tok2);
+char **get_argument(char *buffer);
 
 #endif

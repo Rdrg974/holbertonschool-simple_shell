@@ -8,17 +8,14 @@
 
 int main(void)
 {
-	int status;
-	pid_t pid;
-	char *buffer = NULL, *command_path;
-	char **args = malloc(sizeof(char *) * 10);
+	char *buffer = NULL;
 	size_t len = 0;
 	ssize_t bytes_read;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			printf("$ "), fflush(stdout);
+			printf("$ ");
 		bytes_read = getline(&buffer, &len, stdin);
 		if (bytes_read == -1)
 		{
@@ -27,20 +24,8 @@ int main(void)
 			perror("./shell");
 		}
 		buffer[bytes_read - 1] = '\0';
-		pid = fork();
-		if (pid == -1)
-			perror("fork"), exit(EXIT_FAILURE);
-		else if (pid == 0)
-		{
-			args = get_argument(buffer);
-			command_path = get_path(args[0]);
-			execve(command_path, args, NULL);
-			perror("./shell"), exit(EXIT_FAILURE);
-			free(args[0]);
-		}
-		else
-			wait(&status);
+		execute_command(buffer);
 	}
-	free(buffer), free(args);
+	free(buffer);
 	return (0);
 }

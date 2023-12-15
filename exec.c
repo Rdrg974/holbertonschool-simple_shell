@@ -2,19 +2,21 @@
 
 /**
  * execute_command - allows a process to execute another program
- * @args: an array of argument command
- * @command_path: handle of path
+ * @buffer: a string of command shell
  */
-void execute_command(char **args, char *command_path)
+void execute_command(char *buffer)
 {
 	pid_t pid;
 	int status;
+	char *command_path, **args;
 
 	pid = fork();
 	if (pid == -1)
 		perror("fork");
 	else if (pid == 0)
 	{
+		args = get_argument(buffer);
+		command_path = get_path(args[0]);
 		execve(command_path, args, environ);
 		perror("./shell"), exit(EXIT_FAILURE);
 	}

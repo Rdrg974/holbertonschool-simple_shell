@@ -13,6 +13,6 @@ extern char **environ;
 
 char **get_argument(char *buffer);
 char *get_path(char *buffer);
-void execute_command(char *buffer);
+void execute_command(char **args, char *command_path);
 
 #endif

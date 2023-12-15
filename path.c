@@ -21,6 +21,8 @@ char *get_path(char *buffer)
 		while (token)
 		{
 			file_path = malloc(length_buffer + strlen(token) + 2);
+			if (file_path == NULL)
+				perror("malloc"), exit(EXIT_FAILURE);
 			strcpy(file_path, token);
 			strcat(file_path, "/");
 			strcat(file_path, buffer);

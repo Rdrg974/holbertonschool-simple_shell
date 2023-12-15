@@ -17,7 +17,6 @@ void execute_command(char **args, char *command_path)
 	{
 		execve(command_path, args, environ);
 		perror("./shell"), exit(EXIT_FAILURE);
-		free(args[0]);
 	}
 	else
 		wait(&status);

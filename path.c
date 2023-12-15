@@ -28,10 +28,14 @@ char *get_path(char *buffer)
 			strcat(file_path, "/");
 			strcat(file_path, buffer);
 			if (stat(file_path, &st) == 0)
+			{
+				free(tmp);
 				return (file_path);
+			}
 			free(file_path);
 			token = strtok(NULL, ":");
 		}
+		free(tmp);
 		return (NULL);
 	}
 	return (buffer);

@@ -9,6 +9,8 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+extern char **environ;
+
 char **get_argument(char *buffer);
 char *get_path(char *buffer);
 void execute_command(char *buffer);

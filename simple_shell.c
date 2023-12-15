@@ -3,7 +3,7 @@
 
 /**
  * main - write a UNIX command line interpreter
- * Return: Always 0 (Success)
+ * Return: Always 0 (success)
  */
 
 int main(void)
@@ -25,7 +25,7 @@ int main(void)
 		}
 		buffer[bytes_read - 1] = '\0';
 		if (strcmp(buffer, "exit") == 0)
-			return (-1);
+			free(buffer), exit(0);
 		execute_command(buffer);
 	}
 	free(buffer);

@@ -1,6 +1,8 @@
 #ifndef __SIMPLE__SHELL__H__
 #define __SIMPLE__SHELL__H__
 
+#define MAX_ARGS 10
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

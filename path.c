@@ -1,5 +1,11 @@
 #include "simple_shell.h"
 
+/**
+ * get_path - handle the path
+ * @buffer: a string of command
+ * Return: the handle the path
+ */
+
 char *get_path(char *buffer)
 {
 	char *path;
@@ -9,7 +15,7 @@ char *get_path(char *buffer)
 
 	if (strstr(buffer, "/") == NULL)
 	{
-		path = "/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin";
+		path = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
 		tmp = malloc(strlen(path) + 1);
 		strcpy(tmp, path);
 		token = strtok(tmp, ":");

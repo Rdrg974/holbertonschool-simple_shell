@@ -28,15 +28,19 @@ int main(void)
 		args = get_argument(buffer);
 		if (args == NULL)
 			continue;
+		if (strcmp(args[0], "exit") == 0)
+		{
+			free(args[0]), free(args);
+			free(buffer), exit(0);
+		}
 		command_path = get_path(args[0]);
 		if (command_path == NULL)
 		{
-			fprintf(stderr, "%s: command not found\n", buffer);
-			free(args[0]), free(args);
+			fprintf(stderr, "%s: command not found\n", args[0]);
 			continue;
 		}
 		execute_command(args, command_path);
-		free(args[0]), free(args);
+		free(command_path), free(args);
 	}
 	free(buffer);
 	return (0);

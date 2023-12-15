@@ -11,7 +11,6 @@ char *get_path(char *buffer)
 	char *path;
 	int length_buffer = strlen(buffer);
 	char *token, *tmp, *file_path;
-	struct stat st;
 
 	if (strstr(buffer, "/") == NULL)
 	{
@@ -25,13 +24,12 @@ char *get_path(char *buffer)
 			strcpy(file_path, token);
 			strcat(file_path, "/");
 			strcat(file_path, buffer);
-			if (stat(file_path, &st) == 0)
+			if (access(file_path, X_OK) == 0)
 				return (file_path);
 			free(file_path);
 			token = strtok(NULL, ":");
 		}
+		return (NULL);
 	}
-	else
-		return (buffer);
-	return (NULL);
+	return (buffer);
 }

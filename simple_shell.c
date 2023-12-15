@@ -11,6 +11,7 @@ int main(void)
 	char *buffer = NULL;
 	size_t len = 0;
 	ssize_t bytes_read;
+	char **args, *command_path;
 
 	while (1)
 	{
@@ -24,8 +25,16 @@ int main(void)
 			perror("./shell");
 		}
 		buffer[bytes_read - 1] = '\0';
-		execute_command(buffer);
+		args = get_argument(buffer);
+		command_path = get_path(args[0]);
+		if (command_path == NULL)
+		{
+			fprintf(stderr, "%s: command not found\n", buffer);
+			continue;
+		}
+		execute_command(args, command_path);
 	}
+	free(args);
 	free(buffer);
 	return (0);
 }

@@ -1,7 +1,5 @@
 #include "simple_shell.h"
 
-#define MAX_ARGS 10
-
 /**
  * get_argument - handle command lines with arguments
  * @buffer: path + argument

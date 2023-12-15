@@ -26,15 +26,18 @@ int main(void)
 		}
 		buffer[bytes_read - 1] = '\0';
 		args = get_argument(buffer);
+		if (args == NULL)
+			continue;
 		command_path = get_path(args[0]);
 		if (command_path == NULL)
 		{
 			fprintf(stderr, "%s: command not found\n", buffer);
+			free(args[0]), free(args);
 			continue;
 		}
 		execute_command(args, command_path);
+		free(args[0]), free(args);
 	}
-	free(args);
 	free(buffer);
 	return (0);
 }

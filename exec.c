@@ -18,7 +18,7 @@ void execute_command(char *buffer)
 	{
 		args = get_argument(buffer);
 		command_path = get_path(args[0]);
-		execve(command_path, args, NULL);
+		execve(command_path, args, environ);
 		perror("./shell"), exit(EXIT_FAILURE);
 		free(args[0]);
 	}

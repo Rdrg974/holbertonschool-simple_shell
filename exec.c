@@ -12,7 +12,7 @@ void execute_command(char **args, char *command_path)
 
 	pid = fork();
 	if (pid == -1)
-		perror("fork"), exit(EXIT_FAILURE);
+		perror("fork");
 	else if (pid == 0)
 	{
 		execve(command_path, args, environ);

@@ -10,25 +10,22 @@ void execute_command(char *buffer)
 	int status;
 	char *command_path, **args;
 
-	args = get_argument(buffer);
-	command_path = get_path(args[0]);
-	if (command_path != NULL)
+	pid = fork();
+	if (pid == -1)
+		perror("fork");
+	else if (pid == 0)
 	{
-		pid = fork();
-		if (pid == -1)
-			perror("fork");
-		else if (pid == 0)
-		{
-			execve(command_path, args, environ);
-			perror("./shell"), exit(EXIT_FAILURE);
-		}
-		else
-		{
-			do {
-				wait(&status);
-			} while (WIFEXITED(status) == 0 && WIFSIGNALED(status) == 0);
-		}
+		args = get_argument(buffer);
+		command_path = get_path(args[0]);
+		if (command_path == NULL)
+			printf("%s: command not found\n", args[0]), exit(0);
+		execve(command_path, args, environ);
+		perror("./shell"), exit(EXIT_FAILURE);
 	}
 	else
-		printf("%s: command not found\n", args[0]);
+	{
+		do {
+			wait(&status);
+		} while (WIFEXITED(status) == 0 && WIFSIGNALED(status) == 0);
+	}
 }

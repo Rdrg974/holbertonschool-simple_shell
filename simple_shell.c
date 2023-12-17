@@ -1,24 +1,24 @@
 #define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
+#include "simple_shell.h"
+
+/**
+ * main - write a UNIX command line interpreter
+ * Return: Always 0 (success)
+ */
 
 int main(void)
 {
 	char *buffer = NULL;
 	size_t len = 0;
 	ssize_t bytes_read;
-	char *args[2], *envp[] = { NULL };
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
 		bytes_read = getline(&buffer, &len, stdin);
+		if (strcmp(buffer, "\n") == 0)
+			continue;
 		if (bytes_read == -1)
 		{
 			if (feof(stdin))
@@ -26,20 +26,10 @@ int main(void)
 			perror("./shell");
 			continue;
 		}
-		if (buffer[0] == '\n')
-			continue;
 		buffer[bytes_read - 1] = '\0';
-		args[0] = buffer;
-		args[1] = NULL;
-		if (access(buffer, X_OK) == 0)
-		{
-			if (fork() == 0)
-				execve(args[0], args, envp), exit(EXIT_FAILURE);
-			else
-				wait(NULL);
-		}
-		else
-			printf("%s: command not found\n", buffer);
+		if (strcmp(buffer, "exit") == 0)
+			free(buffer), exit(0);
+		execute_command(buffer);
 	}
 	free(buffer);
 	return (0);

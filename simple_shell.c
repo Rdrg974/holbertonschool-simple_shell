@@ -24,6 +24,7 @@ int main(void)
 			if (feof(stdin))
 				break;
 			perror("./shell");
+			continue;
 		}
 		buffer[bytes_read - 1] = '\0';
 		if (strcmp(buffer, "exit") == 0)

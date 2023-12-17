@@ -17,6 +17,8 @@ int main(void)
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
 		bytes_read = getline(&buffer, &len, stdin);
+		if (strcmp(buffer, "\n") == 0)
+			continue;
 		if (bytes_read == -1)
 		{
 			if (feof(stdin))

@@ -21,5 +21,9 @@ void execute_command(char *buffer)
 		perror("./shell"), exit(EXIT_FAILURE);
 	}
 	else
-		wait(&status);
+	{
+		do {
+			wait(&status);
+		} while (WIFEXITED(status) == 0 && WIFSIGNALED(status) == 0);
+	}
 }

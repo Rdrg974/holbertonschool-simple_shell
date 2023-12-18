@@ -20,7 +20,10 @@ int main(void)
 		if (bytes_read == -1)
 		{
 			if (feof(stdin))
+			{
+				printf("\n");
 				break;
+			}
 			perror("./shell");
 			continue;
 		}

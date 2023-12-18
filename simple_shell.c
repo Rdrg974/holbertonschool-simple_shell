@@ -24,11 +24,11 @@ int main(void)
 			perror("./shell");
 			continue;
 		}
-		if (strcmp(buffer, "exit\n") == 0)
-			free(buffer), exit(0);
 		if (strcmp(buffer, "\n") == 0)
 			continue;
 		buffer[bytes_read - 1] = '\0';
+		if (strcmp(buffer, "exit") == 0)
+			free(buffer), exit(0);
 		execute_command(buffer);
 	}
 	free(buffer);

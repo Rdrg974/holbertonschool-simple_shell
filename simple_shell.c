@@ -25,7 +25,7 @@ int main(void)
 			continue;
 		}
 		if (strcmp(buffer, "exit\n") == 0)
-			exit(0);
+			free(buffer), exit(0);
 		if (strcmp(buffer, "\n") == 0)
 			continue;
 		buffer[bytes_read - 1] = '\0';

@@ -20,10 +20,7 @@ int main(void)
 		if (bytes_read == -1)
 		{
 			if (feof(stdin))
-			{
-				printf("\n");
 				break;
-			}
 			perror("./shell");
 			continue;
 		}
@@ -31,7 +28,7 @@ int main(void)
 			continue;
 		buffer[bytes_read - 1] = '\0';
 		if (strcmp(buffer, "exit") == 0)
-			free(buffer), exit(0);
+			free(buffer), exit(EXIT_SUCCESS);
 		execute_command(buffer);
 	}
 	free(buffer);

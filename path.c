@@ -15,7 +15,7 @@ char *get_path(char *buffer)
 
 	if (strstr(buffer, "/") == NULL)
 	{
-		path = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
+		path = _getenv("PATH");
 		tmp = malloc(strlen(path) + 1);
 		strcpy(tmp, path);
 		token = strtok(tmp, ":");

@@ -19,7 +19,7 @@ char **get_argument(char *buffer)
 	token = strtok(tmp, " ");
 	while (token && i < MAX_ARGS - 1)
 	{
-		args[i] = malloc(sizeof(char *) + 5);
+		args[i] = malloc(sizeof(char *) + 1024);
 		if (args[i] == NULL)
 			perror("malloc"), exit(EXIT_FAILURE);
 		strcpy(args[i], token);

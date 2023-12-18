@@ -18,7 +18,7 @@ void execute_command(char *buffer)
 		args = get_argument(buffer);
 		command_path = get_path(args[0]);
 		if (command_path == NULL)
-			printf("%s: command not found\n", args[0]), exit(0);
+			perror("./shell"), exit(0);
 		execve(command_path, args, environ);
 		perror("./shell"), exit(EXIT_FAILURE);
 	}

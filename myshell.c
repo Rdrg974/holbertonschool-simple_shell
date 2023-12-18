@@ -17,28 +17,28 @@ void simple_shell(void)
 
         if (fgets(input, sizeof(input), stdin) == NULL)
         {
-            // Handle Ctrl+D (end of file) condition
+            /* Handle Ctrl+D (end of file) condition */
             printf("\nExiting shell.\n");
             break;
         }
 
-        // Remove the newline character at the end
+        /* Remove the newline character at the end */
         input[strlen(input) - 1] = '\0';
 
         if (!input[0])
         {
-            // Handle empty command (just pressing Enter)
+            /* Handle empty command (just pressing Enter) */
             continue;
         }
 
         if (strcmp(input, "exit") == 0)
         {
-            // Exit the shell if the user types 'exit'
+            /* Exit the shell if the user types 'exit' */
             break;
         }
         else
         {
-            // Execute other commands
+            /* Execute other commands */
             char *args[] = {input, NULL};
             execute_command("/bin/ls", args);
         }
@@ -60,7 +60,7 @@ void execute_command(char *command, char *args[])
         perror("Fork error");
         exit(EXIT_FAILURE);
     }
-    else if (pid == 0) // Child process
+    else if (pid == 0) /* Child process */
     {
         if (execvp(command, args) == -1)
         {
@@ -68,9 +68,9 @@ void execute_command(char *command, char *args[])
             exit(EXIT_FAILURE);
         }
     }
-    else // Parent process
+    else /* Parent process */
     {
-        // Wait for the child process to complete
+        /* Wait for the child process to complete */
         waitpid(pid, NULL, 0);
     }
 }

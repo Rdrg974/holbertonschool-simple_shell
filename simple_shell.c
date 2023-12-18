@@ -28,7 +28,7 @@ int main(void)
 			continue;
 		buffer[bytes_read - 1] = '\0';
 		if (strcmp(buffer, "exit") == 0)
-			printf("exit\n"), free(buffer), exit(EXIT_SUCCESS);
+			printf("exit\n"), fflush(stdout), free(buffer), exit(0);
 		execute_command(buffer);
 	}
 	free(buffer);

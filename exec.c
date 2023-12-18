@@ -17,10 +17,11 @@ void execute_command(char *buffer)
 	{
 		args = get_argument(buffer);
 		command_path = get_path(args[0]);
-		if (command_path == NULL)
-			perror("./shell"), exit(0);
-		execve(command_path, args, environ);
-		perror("./shell"), exit(EXIT_FAILURE);
+		if (execve(command_path, args, environ) == -1)
+		{
+			fprintf(stderr, "./shell: 1: %s: not found\n", args[0]);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{

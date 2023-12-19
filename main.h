@@ -12,7 +12,8 @@
 extern char *args[];
 
 void display_prompt(void);
-void execute_command(char *command, char *args[]);
+void execute_command(char *command);
 void simple_shell(void);
 
 #endif
+

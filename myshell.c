@@ -39,9 +39,14 @@ void simple_shell(void)
         else
         {
             /* Execute other commands */
+<<<<<<< HEAD
             args[0] = input;
             args[1] = NULL;
             execute_command("/bin/ls");
+=======
+            char *args[] = {input, NULL};
+            execute_command("/bin/ls", args);
+>>>>>>> 7fbbdad0521103aa68909135769d9f06a28b4a76
         }
     }
 }

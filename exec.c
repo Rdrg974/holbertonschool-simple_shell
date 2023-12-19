@@ -10,13 +10,19 @@ void execute_command(char *buffer)
 	int status;
 	char *command_path, **args;
 
+	args = get_argument(buffer);
+	command_path = get_path(args[0]);
+	if (access(command_path, F_OK) == -1)
+	{
+		fprintf(stderr, "./shell: %s: command not found\n", args[0]);
+		free(args);
+		return;
+	}
 	pid = fork();
 	if (pid == -1)
 		perror("fork");
 	else if (pid == 0)
 	{
-		args = get_argument(buffer);
-		command_path = get_path(args[0]);
 		if (execve(command_path, args, environ) == -1)
 		{
 			fprintf(stderr, "./shell: 1: %s: not found\n", args[0]);

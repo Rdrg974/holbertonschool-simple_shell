@@ -23,8 +23,9 @@ int main(__attribute__((unused)) int argc, char *argv[])
 		{
 			if (feof(stdin))
 			{
-				free(buffer);
-				exit(EXIT_SUCCESS);
+				if (isatty(STDIN_FILENO))
+					printf("\n");
+				break;
 			}
 			perror(argv[0]);
 			continue;

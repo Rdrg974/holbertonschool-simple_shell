@@ -9,7 +9,6 @@
 void execute_command(char *buffer, char *name_programm, int nbr_command)
 {
 	pid_t pid;
-	int status;
 	char *command_path, **args;
 
 	pid = fork();
@@ -25,5 +24,5 @@ void execute_command(char *buffer, char *name_programm, int nbr_command)
 		exit(EXIT_FAILURE);
 	}
 	else
-		wait(&status);
+		wait(0);
 }

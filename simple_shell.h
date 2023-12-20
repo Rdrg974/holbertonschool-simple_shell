@@ -15,7 +15,7 @@ extern char **environ;
 
 char **get_argument(char *buffer);
 char *get_path(char *buffer);
-void execute_command(char *buffer, char *name_programm);
+void execute_command(char *buffer, char *name_programm, int nbr_command);
 char *_getenv(const char *name);
 
 #endif

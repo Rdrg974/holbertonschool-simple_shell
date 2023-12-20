@@ -3,10 +3,12 @@
 
 /**
  * main - write a UNIX command line interpreter
+ * @argc: number of argument
+ * @argv: contain the name of programm
  * Return: Always 0 (success)
  */
 
-int main(void)
+int main(__attribute__((unused)) int argc, char *argv[])
 {
 	char *buffer = NULL;
 	size_t len = 0;
@@ -21,10 +23,10 @@ int main(void)
 		{
 			if (feof(stdin))
 			{
-				printf("exit\n");
-				break;
+				free(buffer);
+				exit(EXIT_SUCCESS);
 			}
-			perror("./shell");
+			perror(argv[0]);
 			continue;
 		}
 		if (strcmp(buffer, "\n") == 0)
@@ -32,7 +34,7 @@ int main(void)
 		buffer[bytes_read - 1] = '\0';
 		if (strcmp(buffer, "exit") == 0)
 			break;
-		execute_command(buffer);
+		execute_command(buffer, argv[0]);
 	}
 	free(buffer);
 	return (0);

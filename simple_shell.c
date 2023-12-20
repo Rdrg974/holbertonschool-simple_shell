@@ -10,6 +10,7 @@
 
 int main(__attribute__((unused)) int argc, char *argv[])
 {
+	int nbr_command = 1;
 	char *buffer = NULL;
 	size_t len = 0;
 	ssize_t bytes_read;
@@ -35,7 +36,8 @@ int main(__attribute__((unused)) int argc, char *argv[])
 		buffer[bytes_read - 1] = '\0';
 		if (strcmp(buffer, "exit") == 0)
 			break;
-		execute_command(buffer, argv[0]);
+		execute_command(buffer, argv[0], nbr_command);
+		nbr_command++;
 	}
 	free(buffer);
 	return (0);

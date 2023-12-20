@@ -3,8 +3,9 @@
 /**
  * execute_command - allows a process to execute another program
  * @buffer: a string of command shell
+ * @name_programm: the name of progamm
  */
-void execute_command(char *buffer)
+void execute_command(char *buffer, char *name_programm)
 {
 	pid_t pid;
 	int status;
@@ -19,7 +20,7 @@ void execute_command(char *buffer)
 		command_path = get_path(args[0]);
 		if (execve(command_path, args, environ) == -1)
 		{
-			fprintf(stderr, "shell: %s: command not found\n", args[0]);
+			fprintf(stderr, "%s: %s: command not found\n", name_programm, args[0]);
 			exit(EXIT_FAILURE);
 		}
 	}

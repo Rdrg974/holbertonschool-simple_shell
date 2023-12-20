@@ -17,6 +17,8 @@ char *get_path(char *buffer)
 	{
 		path = _getenv("PATH");
 		tmp = malloc(strlen(path) + 1);
+		if (tmp == NULL)
+			perror("malloc"), exit(EXIT_FAILURE);
 		strcpy(tmp, path);
 		token = strtok(tmp, ":");
 		while (token)
@@ -24,9 +26,7 @@ char *get_path(char *buffer)
 			file_path = malloc(length_buffer + strlen(token) + 2);
 			if (file_path == NULL)
 				perror("malloc"), exit(EXIT_FAILURE);
-			strcpy(file_path, token);
-			strcat(file_path, "/");
-			strcat(file_path, buffer);
+			sprintf(file_path, "%s/%s", token, buffer);
 			if (stat(file_path, &st) == 0)
 			{
 				free(tmp);

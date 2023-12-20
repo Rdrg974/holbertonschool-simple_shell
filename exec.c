@@ -18,16 +18,10 @@ void execute_command(char *buffer, char *name_programm)
 	{
 		args = get_argument(buffer);
 		command_path = get_path(args[0]);
-		if (execve(command_path, args, environ) == -1)
-		{
-			fprintf(stderr, "%s: %s: command not found\n", name_programm, args[0]);
-			exit(EXIT_FAILURE);
-		}
+		execve(command_path, args, environ);
+		fprintf(stderr, "%s: %s: not found\n", name_programm, args[0]);
+		exit(EXIT_FAILURE);
 	}
 	else
-	{
-		do {
-			wait(&status);
-		} while (WIFEXITED(status) == 0 && WIFSIGNALED(status) == 0);
-	}
+		wait(&status);
 }

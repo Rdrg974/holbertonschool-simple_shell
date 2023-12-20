@@ -26,6 +26,7 @@ int main(__attribute__((unused)) int argc, char *argv[])
 			{
 				if (isatty(STDIN_FILENO))
 					printf("\n");
+				fflush(stdout);
 				break;
 			}
 			perror(argv[0]);

@@ -84,3 +84,4 @@ $ exit
 
 This file lists all contributors to the repository:
 Abdou Rodrigue HASSANY MOHAMED <abdou-rodrigue.hassany-mohamed@holbertonstudents.com>
+Mathys Quaggio <mathys.quaggio@holbertonstudents.com>

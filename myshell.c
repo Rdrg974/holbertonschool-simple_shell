@@ -17,7 +17,7 @@ void simple_shell(void)
 
         if (fgets(input, sizeof(input), stdin) == NULL)
         {
-            /* Handle Ctrl+D (end of file) condition */
+            /* Handle Ctrl+D (end of file or read error) condition */
             printf("\nExiting shell.\n");
             break;
         }
@@ -41,6 +41,10 @@ void simple_shell(void)
             /* Execute the 'env' command */
             char *args_env[] = {"env", NULL};
             execute_command("/usr/bin/env", args_env);
+        else if (strcmp(input, "pwd") == 0)
+        {
+            /* Execute the command "pwd" */
+            pwd();
         }
         else
         {
@@ -54,7 +58,11 @@ void simple_shell(void)
 
 void display_prompt(void)
 {
-    printf("Your Shell > ");
+    char cwd[1024];
+    if (getcwd(cwd, sizeof(cwd)) != NULL)
+        printf("%s > ", cwd);
+    else
+        perror("getcwd() error");
     fflush(stdout);
 }
 
@@ -119,7 +127,6 @@ void execute_command(char *command, char *args[])
 
 char *get_path(void)
 {
-    extern char **environ;
     char **env;
     for (env = environ; *env != NULL; env++)
     {
@@ -130,4 +137,68 @@ char *get_path(void)
     }
     return NULL;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> ae718ac63e3fbcee56ef5dc8344c8a6c3c3f128b
 

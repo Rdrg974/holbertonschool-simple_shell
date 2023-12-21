@@ -2,31 +2,31 @@
 
 /**
  * get_argument - handle command lines with arguments
- * @buffer: path + argument
+ * @line: path + argument
  * Return: an array of each element of path
  */
 
-char **get_argument(char *buffer)
+char **get_argument(char *line)
 {
 	int i = 0;
-	char *tmp = malloc(strlen(buffer) + 1);
+	char *tmp = malloc(strlen(line) + 1);
 	char *token;
-	char **args = malloc(sizeof(char *) * MAX_ARGS);
+	char **array_command = malloc(sizeof(char *) * MAX_ARGS);
 
-	if (tmp == NULL || args == NULL)
+	if (tmp == NULL || array_command == NULL)
 		perror("malloc"), exit(EXIT_FAILURE);
-	strcpy(tmp, buffer);
-	token = strtok(buffer, " \t\r\n\a");
+	strcpy(tmp, line);
+	token = strtok(line, " \t\r\n\a");
 	while (token)
 	{
-		args[i] = malloc(strlen(token) + 1);
-		if (args[i] == NULL)
+		array_command[i] = malloc(strlen(token) + 1);
+		if (array_command[i] == NULL)
 			perror("malloc"), exit(EXIT_FAILURE);
-		strcpy(args[i], token);
+		strcpy(array_command[i], token);
 		token = strtok(NULL, " \t\r\n\a");
 		i++;
 	}
-	args[i] = NULL;
+	array_command[i] = NULL;
 	free(tmp);
-	return (args);
+	return (array_command);
 }

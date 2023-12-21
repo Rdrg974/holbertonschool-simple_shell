@@ -8,11 +8,11 @@
 #include <sys/wait.h>
 
 #define MAX_INPUT_SIZE 1024
-
-extern char *args[];
+#define MAX_PATH_SIZE 1024
 
 void display_prompt(void);
 void execute_command(char *command, char *args[]);
 void simple_shell(void);
+char *get_path(void);
 
 #endif

@@ -1,0 +1,48 @@
+MY-SHELL(1°
+
+NAME
+       my-shell - A simple shell implementation
+
+SYNOPSIS
+       my-shell
+
+DESCRIPTION
+       my-shell is a simple shell implementation that allows the user to execute basic
+       commands. It supports features such as command execution, environment variable
+       handling, and basic built-in commands.
+
+OPTIONS
+       None.
+
+COMMANDS
+       exit
+              Exit the shell.
+
+       ls     List files in the current directory.
+
+       pwd    Print the current working directory.
+
+       cd     Change the current directory.
+
+       env    Print the current environment variables.
+
+USAGE
+       To use my-shell, simply run the executable. Once inside the shell, you can enter
+       commands and use built-in features.
+
+EXAMPLES
+       $ my-shell
+       Your Shell > ls
+       file1 file2
+       Your Shell > pwd
+       /home/user
+       Your Shell > cd /path/to/directory
+       Your Shell > exit
+
+AUTHOR
+       Quaggio Mathys
+
+SEE ALSO
+       Other relevant commands or documentation.
+
+

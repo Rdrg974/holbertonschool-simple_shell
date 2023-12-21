@@ -9,11 +9,10 @@
 
 #define MAX_INPUT_SIZE 1024
 
-extern char *args[];
+void execute_command(char *command, char *args[]);
 
 void display_prompt(void);
-void execute_command(char *command);
 void simple_shell(void);
+void pwd(void);
 
 #endif
-

@@ -1,7 +1,6 @@
 #include "main.h"
 
 char input[MAX_INPUT_SIZE];
-char *args[MAX_INPUT_SIZE + 1]; /* +1 for NULL at the end */
 
 int main(void)
 {
@@ -17,7 +16,7 @@ void simple_shell(void)
 
         if (fgets(input, sizeof(input), stdin) == NULL)
         {
-            /* Handle Ctrl+D (end of file) condition */
+            /* Handle Ctrl+D (end of file or read error) condition */
             printf("\nExiting shell.\n");
             break;
         }
@@ -36,28 +35,31 @@ void simple_shell(void)
             /* Exit the shell if the user types 'exit' */
             break;
         }
+        else if (strcmp(input, "pwd") == 0)
+        {
+            /* Execute the command "pwd" */
+            pwd();
+        }
         else
         {
             /* Execute other commands */
-<<<<<<< HEAD
-            args[0] = input;
-            args[1] = NULL;
-            execute_command("/bin/ls");
-=======
             char *args[] = {input, NULL};
             execute_command("/bin/ls", args);
->>>>>>> 7fbbdad0521103aa68909135769d9f06a28b4a76
         }
     }
 }
 
 void display_prompt(void)
 {
-    printf("Your Shell > ");
+    char cwd[1024];
+    if (getcwd(cwd, sizeof(cwd)) != NULL)
+        printf("%s > ", cwd);
+    else
+        perror("getcwd() error");
     fflush(stdout);
 }
 
-void execute_command(char *command)
+void execute_command(char *command, char *args[])
 {
     pid_t pid = fork();
 
@@ -80,4 +82,68 @@ void execute_command(char *command)
         waitpid(pid, NULL, 0);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

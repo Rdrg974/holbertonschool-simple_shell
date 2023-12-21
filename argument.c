@@ -16,14 +16,14 @@ char **get_argument(char *buffer)
 	if (tmp == NULL || args == NULL)
 		perror("malloc"), exit(EXIT_FAILURE);
 	strcpy(tmp, buffer);
-	token = strtok(tmp, " \t");
+	token = strtok(buffer, " \t\r\n\a");
 	while (token)
 	{
-		args[i] = malloc(sizeof(char *) + MAX_ARGS);
+		args[i] = malloc(strlen(token) + 1);
 		if (args[i] == NULL)
 			perror("malloc"), exit(EXIT_FAILURE);
 		strcpy(args[i], token);
-		token = strtok(NULL, " ");
+		token = strtok(NULL, " \t\r\n\a");
 		i++;
 	}
 	args[i] = NULL;

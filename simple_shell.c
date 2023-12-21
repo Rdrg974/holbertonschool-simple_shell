@@ -10,8 +10,8 @@
 
 int main(__attribute__((unused)) int argc, char *argv[])
 {
-	int nbr_command = 1;
-	char *buffer = NULL;
+	int nbr_command = 0;
+	char *buffer = NULL, **args = NULL;
 	size_t len = 0;
 	ssize_t bytes_read;
 
@@ -19,6 +19,7 @@ int main(__attribute__((unused)) int argc, char *argv[])
 	{
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
+		nbr_command++;
 		bytes_read = getline(&buffer, &len, stdin);
 		if (bytes_read == -1)
 		{
@@ -29,16 +30,21 @@ int main(__attribute__((unused)) int argc, char *argv[])
 				fflush(stdout);
 				break;
 			}
-			perror(argv[0]);
+			perror(argv[0]), free(buffer);
 			continue;
 		}
-		if (strcmp(buffer, "\n") == 0)
-			continue;
 		buffer[bytes_read - 1] = '\0';
 		if (strcmp(buffer, "exit") == 0)
 			break;
-		execute_command(buffer, argv[0], nbr_command);
-		nbr_command++;
+		args = get_argument(buffer);
+		if (args[0] == NULL)
+		{
+			free_args(args), free(buffer);
+			buffer = NULL;
+			continue;
+		}
+		execute_command(args, nbr_command);
+		free_args(args);
 	}
 	free(buffer);
 	return (0);

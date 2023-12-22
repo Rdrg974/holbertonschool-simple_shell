@@ -11,8 +11,8 @@
 int main(__attribute__((unused)) int argc, char *argv[])
 {
 	int nbr_command = 0;
-	char *buffer = NULL, **args = NULL;
-	size_t len = 0;
+	char *line = NULL, **array_command = NULL;
+	size_t length = 0;
 	ssize_t bytes_read;
 
 	while (1)
@@ -20,7 +20,7 @@ int main(__attribute__((unused)) int argc, char *argv[])
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
 		nbr_command++;
-		bytes_read = getline(&buffer, &len, stdin);
+		bytes_read = getline(&line, &length, stdin);
 		if (bytes_read == -1)
 		{
 			if (feof(stdin))
@@ -30,22 +30,22 @@ int main(__attribute__((unused)) int argc, char *argv[])
 				fflush(stdout);
 				break;
 			}
-			perror(argv[0]), free(buffer);
+			perror(argv[0]), free(line);
 			continue;
 		}
-		buffer[bytes_read - 1] = '\0';
-		if (strcmp(buffer, "exit") == 0)
+		line[bytes_read - 1] = '\0';
+		if (strcmp(line, "exit") == 0)
 			break;
-		args = get_argument(buffer);
-		if (args[0] == NULL)
+		array_command = get_argument(line);
+		if (array_command[0] == NULL)
 		{
-			free_args(args), free(buffer);
-			buffer = NULL;
+			free_args(array_command), free(line);
+			line = NULL;
 			continue;
 		}
-		execute_command(args, nbr_command);
-		free_args(args);
+		execute_command(array_command, nbr_command);
+		free_args(array_command);
 	}
-	free(buffer);
+	free(line);
 	return (0);
 }

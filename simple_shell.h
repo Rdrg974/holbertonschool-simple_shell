@@ -13,10 +13,10 @@
 
 extern char **environ;
 
-char **get_argument(char *buffer);
-char *get_path(char *buffer);
-void free_args(char **args);
-void execute_command(char **array_argument, int nbr_command);
+char **get_argument(char *line);
+char *get_path(char *line);
+void free_args(char **array_command);
+void execute_command(char **array_command, int nbr_command);
 char *_getenv(const char *name);
 
 #endif

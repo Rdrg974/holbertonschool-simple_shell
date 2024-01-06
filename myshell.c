@@ -16,7 +16,7 @@ void simple_shell(void)
 
         if (fgets(input, sizeof(input), stdin) == NULL)
         {
-            /* Handle Ctrl+D (end of file or read error) condition */
+            /* Handle Ctrl+D (end of file) condition */
             printf("\nExiting shell.\n");
             break;
         }
@@ -35,27 +35,30 @@ void simple_shell(void)
             /* Exit the shell if the user types 'exit' */
             break;
         }
+        else if (strcmp(input, "ls") == 0)
+        {
+            /* Execute the 'ls' command */
+            char *args[] = {input, NULL};
+            execute_command("/bin/ls", args);
+        }
         else if (strcmp(input, "pwd") == 0)
         {
-            /* Execute the command "pwd" */
-            pwd();
+            /* Execute the 'pwd' command */
+            char *args[] = {input, NULL};
+            execute_command("/bin/pwd", args);
         }
         else
         {
             /* Execute other commands */
             char *args[] = {input, NULL};
-            execute_command("/bin/ls", args);
+            execute_command("/bin/echo", args);
         }
     }
 }
 
 void display_prompt(void)
 {
-    char cwd[1024];
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-        printf("%s > ", cwd);
-    else
-        perror("getcwd() error");
+    printf("Your Shell > ");
     fflush(stdout);
 }
 
@@ -82,68 +85,3 @@ void execute_command(char *command, char *args[])
         waitpid(pid, NULL, 0);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

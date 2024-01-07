@@ -9,12 +9,21 @@
 
 #define MAX_INPUT_SIZE 1024
 #define MAX_PATH_SIZE 1024
+extern char **environ;
 
-void execute_command(char *command, char *args[]);
+/**
+ * struct custom_cmd - A custom command
+ * @name: The name of the command
+ * @func: The function to execute
+ */
 
-void display_prompt(void);
-void simple_shell(void);
-char *get_path(void);
-void pwd(void);
+typedef struct custom_cmd
+{
+	char *name;
+	void (*func)(char *input, int status);
+} custom_cmd_t;
+
+/* char *get_path(void); */
+int is_custom_command(char *input, int status);
 
 #endif
